@@ -10,7 +10,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.0.0"),
+    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.1.0"),
 ]
 ```
 
@@ -39,7 +39,7 @@ let channel = try await srtc.joinChannel(token: token)
 
 ## 版本
 
-当前版本 **1.0.0**。
+当前版本 **1.1.0**。
 
 | 平台 | 最低版本 |
 | --- | --- |

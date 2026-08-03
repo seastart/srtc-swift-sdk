@@ -19,16 +19,17 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // WebRTC。SRTC 的 public API 上出现了 LKRTCVideoRotation / LKRTCMediaStreamTrack，
-        // 所以这个依赖必须暴露给使用方，不能藏起来。
+        // WebRTC。公开 API 已不暴露任何底层 WebRTC 类型，但 SRTC 在运行时动态链接
+        // LiveKitWebRTC.framework，所以依赖仍需声明。由下面的中转 target 自动传递给
+        // 接入方 —— 接入方不必在自己的 Package.swift 里重复写这一条。
         .package(url: "https://github.com/livekit/webrtc-xcframework.git", exact: "144.7559.10"),
     ],
     targets: [
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.0.0.zip",
-            checksum: "8082daa6ff2e2581d49e2c898dfb3c192bbf6ea20b154800c8e28b6e6ef85520"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.1.0.zip",
+            checksum: "ff785c6779ec60f70983a52c9eda39ace20709b045ff902febcd1d49c9546541"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。

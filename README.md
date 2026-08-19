@@ -10,7 +10,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.2.0"),
+    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.3.0"),
 ]
 ```
 
@@ -79,7 +79,7 @@ iOS 默认的屏幕共享是**应用内采集**，只能采到 App 自己的画�
 
 ## 版本
 
-当前版本 **1.2.0**（`SRTCBroadcastKit` **1.0.0**，与本包同 tag 发布，
+当前版本 **1.3.0**（`SRTCBroadcastKit` **1.0.1**，与本包同 tag 发布，
 两者始终配套，不需要也不应该单独指定版本）。
 
 | 平台 | 最低版本 |

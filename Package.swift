@@ -17,6 +17,16 @@ let package = Package(
             name: "SRTC",
             targets: ["SRTCSDK"]
         ),
+        // iOS 屏幕共享（全屏采集）的扩展侧库。
+        //
+        // ⚠️ 只加到 Broadcast Upload Extension 的 target 上，**不要**加到 App target：
+        // App 侧的 SRTC 里已经静态含有同一份代码，一个进程里出现两份同名类型会让
+        // 日志配置这类单例变成两个实例，dyld 还可能报 class implemented in both。
+        // 扩展进程有 50MB 内存上限，所以它也绝不能反过来去链 SRTC。
+        .library(
+            name: "SRTCBroadcastKit",
+            targets: ["SRTCBroadcastKit"]
+        ),
     ],
     dependencies: [
         // WebRTC。公开 API 已不暴露任何底层 WebRTC 类型，但 SRTC 在运行时动态链接
@@ -28,8 +38,8 @@ let package = Package(
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.1.0.zip",
-            checksum: "ff785c6779ec60f70983a52c9eda39ace20709b045ff902febcd1d49c9546541"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.2.0.zip",
+            checksum: "d0f85264037023fd54ac61ec20c3c76175bc225034ec55ca6cf1dac00ec3b6c7"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。
@@ -40,6 +50,13 @@ let package = Package(
                 .product(name: "LiveKitWebRTC", package: "webrtc-xcframework"),
             ],
             path: "Sources/SRTCSDK"
+        ),
+        // 屏幕共享扩展侧。不依赖 WebRTC，所以直接暴露 binaryTarget，不需要中转 target。
+        // 与 SRTC 同 tag 发布，两侧线传协议因此始终匹配。
+        .binaryTarget(
+            name: "SRTCBroadcastKit",
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.0.zip",
+            checksum: "4c7e67d8f335d81b79e9c43a483bf0f243703075f6dc1cb841c0b43a04e7f9f2"
         ),
     ]
 )

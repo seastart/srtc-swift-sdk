@@ -40,8 +40,8 @@ let package = Package(
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.5.5.zip",
-            checksum: "48b3f18214d2b44d8b0d699400c33666ea01f694bd5c435c6b679355710b2640"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.6.0.zip",
+            checksum: "6614585354d5a2a6f18bf88fda5cc5ff1aa99cd708d0625c9b9bde715ecda714"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。
@@ -57,8 +57,8 @@ let package = Package(
         // 与 SRTC 同 tag 发布，两侧线传协议因此始终匹配。
         .binaryTarget(
             name: "SRTCBroadcastKit",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.18.zip",
-            checksum: "87651e02cb6dd2535b70192f90c2719f137112deb0d4547997e8c481ac6e6087"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.19.zip",
+            checksum: "38908bf0886d79bbd282f1ad92d3d85aa240af257d60f8aaa3724f37d58f4d95"
         ),
     ]
 )

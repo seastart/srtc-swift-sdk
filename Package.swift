@@ -9,10 +9,11 @@ import PackageDescription
 let package = Package(
     name: "srtc-swift-sdk",
     platforms: [
-        // 自 1.4.0 起下限由虚拟背景（onnxruntime）决定，见本仓 Package.swift 顶部的说明。
-        // 1.3.x 及更早是 iOS 13 / macOS 10.15
+        // iOS 下限由虚拟背景（onnxruntime）决定；1.7.0 起虚拟背景仅 iOS 提供，macOS 降到 12.3
+        // （屏幕共享用的 ScreenCaptureKit 起点）。见源码仓 Package.swift 顶部的说明。
+        // 1.3.x 及更早是 iOS 13 / macOS 10.15；1.4.0 ~ 1.6.x 是 iOS 16 / macOS 14
         .iOS(.v16),
-        .macOS(.v14),
+        .macOS("12.3"),
     ],
     products: [
         .library(
@@ -40,8 +41,8 @@ let package = Package(
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.6.0.zip",
-            checksum: "6614585354d5a2a6f18bf88fda5cc5ff1aa99cd708d0625c9b9bde715ecda714"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.7.0.zip",
+            checksum: "d09e9cd1382e171adc639df095075e94b451c455054acb76a46fd660c6f5f51a"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。
@@ -57,8 +58,8 @@ let package = Package(
         // 与 SRTC 同 tag 发布，两侧线传协议因此始终匹配。
         .binaryTarget(
             name: "SRTCBroadcastKit",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.19.zip",
-            checksum: "38908bf0886d79bbd282f1ad92d3d85aa240af257d60f8aaa3724f37d58f4d95"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.20.zip",
+            checksum: "4d57cfcf3a466bd9b10a47ea3bcde98176d20503db9067421fc78823194d9dfe"
         ),
     ]
 )

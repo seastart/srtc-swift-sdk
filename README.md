@@ -10,7 +10,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.7.0"),
+    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.8.0"),
 ]
 ```
 
@@ -77,9 +77,25 @@ iOS 默认的屏幕共享是**应用内采集**，只能采到 App 自己的画�
 - 全屏采集依赖真实签名与 App Group，**模拟器跑不通，必须真机**。扩展进程的日志不在 Xcode
   控制台，用 Console.app 按 subsystem `com.srtc.broadcast` 过滤。
 
+## AI 降噪插件（可选）
+
+`SRTCDeepFilterNet` 产品是基于 DeepFilterNet3 的 AI 降噪，与 Web 降噪插件同一份算法和模型。
+给 App target 加依赖 `SRTCDeepFilterNet`，挂到引擎上即生效：
+
+```swift
+import SRTCDeepFilterNet
+
+guard DeepFilterNetProcessor.isSupported else { return }   // 算力不足的设备隐藏开关
+let denoiser = try DeepFilterNetProcessor(suppressionLevel: 50)
+engine.audioCaptureProcessor = denoiser    // SDK 弱引用处理器，业务侧要自己持有 denoiser
+engine.audioCaptureProcessor = nil         // 卸载
+```
+
+详细用法见文档站「AI 降噪」进阶实践页。
+
 ## 版本
 
-当前版本 **1.7.0**（`SRTCBroadcastKit` **1.0.20**，与本包同 tag 发布，
+当前版本 **1.8.0**（`SRTCBroadcastKit` **1.0.21**，与本包同 tag 发布，
 两者始终配套，不需要也不应该单独指定版本）。
 
 | 平台 | 最低版本 |

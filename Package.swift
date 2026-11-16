@@ -30,6 +30,12 @@ let package = Package(
             name: "SRTCBroadcastKit",
             targets: ["SRTCBroadcastKit"]
         ),
+        // AI 降噪插件（DeepFilterNet3，可选）。单独成产品：内核与模型约 13MB，不用降噪的接入方不必付这份体积。
+        // 挂到 App target，`import SRTCDeepFilterNet`。
+        .library(
+            name: "SRTCDeepFilterNet",
+            targets: ["SRTCDeepFilterNetSDK"]
+        ),
     ],
     dependencies: [
         // WebRTC。公开 API 已不暴露任何底层 WebRTC 类型，但 SRTC 在运行时动态链接
@@ -41,8 +47,8 @@ let package = Package(
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.7.0.zip",
-            checksum: "d09e9cd1382e171adc639df095075e94b451c455054acb76a46fd660c6f5f51a"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.8.0.zip",
+            checksum: "0715e34af9bb838836e62b852f812949d685d87c20a55ea9ea60bdb93875003d"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。
@@ -58,8 +64,20 @@ let package = Package(
         // 与 SRTC 同 tag 发布，两侧线传协议因此始终匹配。
         .binaryTarget(
             name: "SRTCBroadcastKit",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.20.zip",
-            checksum: "4d57cfcf3a466bd9b10a47ea3bcde98176d20503db9067421fc78823194d9dfe"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.21.zip",
+            checksum: "0dd320536c9e9281f132d66b9a1d579e853a8e32656c09aa7472e92536eda8f5"
+        ),
+        // AI 降噪插件本体，动态链接 SRTC.framework（不含 SRTC 的代码）。与 SRTC 同 tag 发布。
+        .binaryTarget(
+            name: "SRTCDeepFilterNet",
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-deepfilternet-1.8.0.zip",
+            checksum: "d656119d400035b5abf54c825f79bae6e726fbe930d839219338e52c8e070b05"
+        ),
+        // 中转 target：把 SRTC（及 WebRTC）一并传递给只声明了降噪产品的接入方
+        .target(
+            name: "SRTCDeepFilterNetSDK",
+            dependencies: ["SRTCDeepFilterNet", "SRTCSDK"],
+            path: "Sources/SRTCDeepFilterNetSDK"
         ),
     ]
 )

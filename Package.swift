@@ -47,8 +47,8 @@ let package = Package(
         // 预编译的 SDK 本体。`import SRTC` 导入的就是它。
         .binaryTarget(
             name: "SRTC",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.8.0.zip",
-            checksum: "0715e34af9bb838836e62b852f812949d685d87c20a55ea9ea60bdb93875003d"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-sdk-1.9.0.zip",
+            checksum: "9484b710eabf8d1b5b40721852cc340350b69d6e8f05a5492bea48b6335382e8"
         ),
         // 中转 target。binaryTarget 自己不能声明 dependencies，所以套一层普通 target
         // 把 WebRTC 依赖传递给使用方 —— 否则每个接入方都得自己再写一遍 WebRTC 依赖。
@@ -64,14 +64,14 @@ let package = Package(
         // 与 SRTC 同 tag 发布，两侧线传协议因此始终匹配。
         .binaryTarget(
             name: "SRTCBroadcastKit",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.21.zip",
-            checksum: "0dd320536c9e9281f132d66b9a1d579e853a8e32656c09aa7472e92536eda8f5"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-broadcastkit-1.0.22.zip",
+            checksum: "749811da0784f522a078f33b5bc3c67d5a85445394d0dc77ab8710e649dd47c9"
         ),
         // AI 降噪插件本体，动态链接 SRTC.framework（不含 SRTC 的代码）。与 SRTC 同 tag 发布。
         .binaryTarget(
             name: "SRTCDeepFilterNet",
-            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-deepfilternet-1.8.0.zip",
-            checksum: "d656119d400035b5abf54c825f79bae6e726fbe930d839219338e52c8e070b05"
+            url: "https://repo.open.seastart.cn/repository/vcs-releases/rtc-swift-deepfilternet-1.9.0.zip",
+            checksum: "3055fe5492fc645c821738a8a78a54202effc04361150b98fc1673c394f5dc9e"
         ),
         // 中转 target：把 SRTC（及 WebRTC）一并传递给只声明了降噪产品的接入方
         .target(

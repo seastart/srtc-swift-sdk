@@ -10,7 +10,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.9.0"),
+    .package(url: "https://github.com/seastart/srtc-swift-sdk.git", from: "1.10.0"),
 ]
 ```
 
@@ -95,7 +95,7 @@ engine.audioCaptureProcessor = nil         // 卸载
 
 ## 版本
 
-当前版本 **1.9.0**（`SRTCBroadcastKit` **1.0.22**，与本包同 tag 发布，
+当前版本 **1.10.0**（`SRTCBroadcastKit` **1.0.23**，与本包同 tag 发布，
 两者始终配套，不需要也不应该单独指定版本）。
 
 | 平台 | 最低版本 |
